@@ -18,12 +18,6 @@ type credentials struct {
 	SecretKey   string
 }
 
-type Response struct {
-	status  string
-	message string
-	data    interface{}
-}
-
 type PaystackApi struct {
 	Credentials *credentials
 	HttpClient  *http.Client
@@ -42,6 +36,15 @@ func cleanValues(v url.Values) url.Values {
 		return url.Values{}
 	}
 	return v
+}
+
+func (ps PaystackApi) getSecretKey() string {
+	return ps.Credentials.SecretKey
+}
+
+func (p PaystackApi) setBasicAuth(r *http.Request) {
+	r.Header.Set("Authorization", "Bearer "+p.Credentials.SecretKey)
+	r.Header.Add("Content-Type", "application/json")
 }
 
 func (ps PaystackApi) NewPaystackApi(CustomerKey string, CustomerSecret string) *PaystackApi {
