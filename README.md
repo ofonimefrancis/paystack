@@ -1,1 +1,1 @@
-# paystack-go
+# paystack
