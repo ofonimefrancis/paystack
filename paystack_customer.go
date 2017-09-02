@@ -40,3 +40,21 @@ type CustomerResponse struct {
 	Data    []Customer   `json:"data"`
 	Meta    ResponseMeta `json:"meta"`
 }
+
+//NewCustomerResponse depicts the structure of the JSON response while creating a new user
+type NewCustomerResponse struct {
+	Status  bool            `json:"status"`
+	Message string          `json:"message"`
+	Data    NewCustomerData `json:"data"`
+}
+
+//NewCustomerData represents the actual data returned while creating a new user
+type NewCustomerData struct {
+	Email        string `json:"email"`
+	Integration  int32  `json:"integration"`
+	Domain       string `json:"domain"`
+	CustomerCode string `json:"customer_code"`
+	ID           int32  `json:"id"`
+	CreatedAt    string `json:"createdAt"`
+	UpdatedAt    string `json:"updatedAt"`
+}

@@ -10,7 +10,7 @@ const (
 	_POST   = iota
 	_DELETE = iota
 	_PUT    = iota
-	BaseUrl = "https://api.paystack.co"
+	BaseURL = "https://api.paystack.co" //BaseURL paystack API URL
 )
 
 type credentials struct {
@@ -18,7 +18,8 @@ type credentials struct {
 	SecretKey   string
 }
 
-type PaystackApi struct {
+// PaystackAPI struct holding the needful
+type PaystackAPI struct {
 	Credentials *credentials
 	HttpClient  *http.Client
 	baseUrl     string
@@ -38,24 +39,24 @@ func cleanValues(v url.Values) url.Values {
 	return v
 }
 
-func (ps PaystackApi) getSecretKey() string {
+func (ps PaystackAPI) getSecretKey() string {
 	return ps.Credentials.SecretKey
 }
 
-func (p PaystackApi) setBasicAuth(r *http.Request) {
-	r.Header.Set("Authorization", "Bearer "+p.Credentials.SecretKey)
+func (ps PaystackAPI) setBasicAuth(r *http.Request) {
+	r.Header.Set("Authorization", "Bearer "+ps.Credentials.SecretKey)
 	r.Header.Add("Content-Type", "application/json")
 }
 
-func (ps PaystackApi) NewPaystackApi(CustomerKey string, CustomerSecret string) *PaystackApi {
-	c := &PaystackApi{
+//NewPaystackAPI initialize a paystack app
+func NewPaystackAPI(CustomerKey string, CustomerSecret string) *PaystackAPI {
+	c := &PaystackAPI{
 		Credentials: &credentials{
 			CustomerKey: CustomerKey,
 			SecretKey:   CustomerSecret,
 		},
 		HttpClient: http.DefaultClient,
-		baseUrl:    BaseUrl,
+		baseUrl:    BaseURL,
 	}
-
 	return c
 }
